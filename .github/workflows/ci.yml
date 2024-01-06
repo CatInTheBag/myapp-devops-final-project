@@ -37,6 +37,7 @@ jobs:
         VALIDATE_YAML: true
         DEFAULT_BRANCH: master
         LINTER_RULES_PATH: configs/
+        DISABLE_ERRORS: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   job2:

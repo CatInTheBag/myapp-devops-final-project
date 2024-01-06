@@ -46,4 +46,4 @@ jobs:
     - name: checkout
       uses: actions/checkout@v4
     - name: Step two
-      run: "echo $PWD"
+      run: echo $PWD

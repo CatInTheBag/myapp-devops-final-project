@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/myapp")
 public class MyAppController {
-    @Autowired
     private final MyAppService myAppService;
 
+    @Autowired
     public MyAppController(MyAppService myAppService) {
         this.myAppService = myAppService;
     }

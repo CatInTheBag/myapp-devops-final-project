@@ -19,9 +19,6 @@ jobs:
       statuses: write
 
     steps:
-      ##########################
-      # Checkout the code base #
-      ##########################
     - name: Checkout
       uses: actions/checkout@v4
       with:
@@ -39,6 +36,7 @@ jobs:
         VALIDATE_JAVA: true
         VALIDATE_YAML: true
         DEFAULT_BRANCH: master
+        LINTER_RULES_PATH: configs/
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   job2:

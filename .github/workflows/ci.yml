@@ -20,20 +20,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
     - name: Lint Code Base
-      uses: super-linter/super-linter@v5.7.2
-      env:
-        VALIDATE_ALL_CODEBASE: true
-        VALIDATE_JAVA: true
-        VALIDATE_YAML: true
-        DEFAULT_BRANCH: master
-        LINTER_RULES_PATH: configs/
-        #disabled for testing purpose
-        DISABLE_ERRORS: true
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: dbelyaev/action-checkstyle@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        checkstyle_config: google_checks.xml
+        level: warning
 
   job2:
     name: Checking for secrets

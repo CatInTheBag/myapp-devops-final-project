@@ -10,15 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/myapp")
 public class MyAppController {
-    private final MyAppService myAppService;
 
-    @Autowired
-    public MyAppController(MyAppService myAppService) {
-        this.myAppService = myAppService;
-    }
+  private final MyAppService myAppService;
 
-    @GetMapping("/get-data")
-    public ResponseEntity<String> getData(){
-        return ResponseEntity.ok(myAppService.getData());
-    }
+  @Autowired
+  public MyAppController(MyAppService myAppService) {
+    this.myAppService = myAppService;
+  }
+
+  @GetMapping("/get-data")
+  public ResponseEntity<String> getData() {
+    return ResponseEntity.ok(myAppService.getData());
+  }
 }

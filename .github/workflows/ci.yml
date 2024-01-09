@@ -10,7 +10,6 @@ on:
 
 jobs:
   testing:
-    needs: secrets
     name: run unit tests on Java 17
     runs-on: ubuntu-latest
     steps:
@@ -44,8 +43,7 @@ jobs:
         level: warning
 
   secrets:
-    #for testing purpose
-    #needs: linting
+    needs: linting
     name: Checking for secrets using gitleaks
     runs-on: ubuntu-latest
     steps:
@@ -60,39 +58,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-
-  vulnerabilities:
+  security:
     needs: secrets
-    name: SonaCloud scan
+    name: Snyk scan
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v4
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: 'zulu'
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=CatInTheBag_devops-final-project
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

@@ -46,29 +46,19 @@ jobs:
   secrets:
     #for testing purpose
     #needs: linting
-    name: Checking for secrets using git-secrets
+    name: Checking for secrets using gitleaks
     runs-on: ubuntu-latest
     steps:
 
     - name: checkout
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-    - name: install git-secrets
-      run: |
-        wget https://github.com/awslabs/git-secrets
-        cd git-secrets
-        ls -la
-        echo $PWD
-        sudo make install
-
-    - name: Show contents of the current working directory
-      run: ls -la
-
-    - name: Scan for secrets
-      run: git secrets --scan -r
-
-    - name: Check for secrets
-      run: git secrets --scan-history
+    - name: gitleaks
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
   vulnerabilities:

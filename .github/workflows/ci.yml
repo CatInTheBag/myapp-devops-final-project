@@ -9,13 +9,28 @@ on:
     branches: [master, main]
 
 jobs:
-  job1:
-    name: Lint code base
+  testing:
+    name: run unit test on Java 17
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: read
-      statuses: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java 17 temurin
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Run Maven clean test jobs
+        run : mvn -f pom.xml clean test
+      - name: Show contents of the current working directory
+        run: ls -la
+      - name: Show contents of the target directory
+        run: ls -la target
+
+  linting:
+    needs: testing
+    name: Lint code base with checkstyle
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -28,7 +43,8 @@ jobs:
         checkstyle_config: google_checks.xml
         level: warning
 
-  job2:
+  secrets:
+    needs: linting
     name: Checking for secrets
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +57,8 @@ jobs:
       with:
         commit_message: "build(detect-secrets): Commit the newly-generated .secrets.baseline file"
 
-  job3:
+  vulnerabilities:
+    needs: secrets
     name: SonaCloud scan
     runs-on: ubuntu-latest
     steps:

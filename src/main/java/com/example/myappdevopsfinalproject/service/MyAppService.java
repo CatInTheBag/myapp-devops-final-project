@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public final class MyAppService {
 
   public String getData() {
+    var somePassword = "password69";
     return "Hello from my app devops project final.";
   }
 }

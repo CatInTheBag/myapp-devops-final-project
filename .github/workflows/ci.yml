@@ -10,7 +10,7 @@ on:
 
 jobs:
   testing:
-    name: run unit test on Java 17
+    name: run unit tests on Java 17
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,7 +31,6 @@ jobs:
     needs: testing
     name: Lint code base with checkstyle
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -39,7 +38,7 @@ jobs:
       uses: dbelyaev/action-checkstyle@master
       with:
         github_token: ${{ secrets.github_token }}
-        reporter: github-pr-review
+        reporter: github-check
         checkstyle_config: google_checks.xml
         level: warning
 

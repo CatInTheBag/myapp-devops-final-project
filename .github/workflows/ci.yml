@@ -10,6 +10,7 @@ on:
 
 jobs:
   testing:
+    needs: secrets
     name: run unit tests on Java 17
     runs-on: ubuntu-latest
     steps:
@@ -43,18 +44,32 @@ jobs:
         level: warning
 
   secrets:
-    needs: linting
-    name: Checking for secrets
+    #for testing purpose
+    #needs: linting
+    name: Checking for secrets using git-secrets
     runs-on: ubuntu-latest
     steps:
+
     - name: checkout
       uses: actions/checkout@v4
-    - name: Run Yelp's detect-secrets
-      uses: RobertFischer/detect-secrets-action@v2.0.0
-    - name: Commit back .secrets.baseline (if it was missing)
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "build(detect-secrets): Commit the newly-generated .secrets.baseline file"
+
+    - name: install git-secrets
+      run: |
+        wget https://github.com/awslabs/git-secrets
+        cd git-secrets
+        ls -la
+        echo $PWD
+        sudo make install
+
+    - name: Show contents of the current working directory
+      run: ls -la
+
+    - name: Scan for secrets
+      run: git secrets --scan -r
+
+    - name: Check for secrets
+      run: git secrets --scan-history
+
 
   vulnerabilities:
     needs: secrets

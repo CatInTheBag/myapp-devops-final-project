@@ -1,30 +1,72 @@
-#name
+---
 name: CI/CD
 
-#events
 on:
   workflow_dispatch:
   push:
-    branches-ignore:
-      - "main"
+    branches-ignore: [master, main]
   pull_request:
-    branches:
-      - 'main'
+    branches: [master, main]
 
 jobs:
-  job1:
-    name: first job
+  testing:
+    name: run unit tests on Java 17
     runs-on: ubuntu-latest
     steps:
-    - name: Step one
-      uses: actions/checkout@v4
-    - name: step two
-      run: env | sort
-  job2:
-    name: second job
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java 17 temurin
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Run Maven clean test jobs
+        run : mvn -f pom.xml clean test
+      - name: Show contents of the current working directory
+        run: ls -la
+      - name: Show contents of the target directory
+        run: ls -la target
+
+  linting:
+    needs: testing
+    name: Lint code base with checkstyle
     runs-on: ubuntu-latest
     steps:
-    - name: Step one
+    - name: Checkout
       uses: actions/checkout@v4
-    - name: Step two
-      run: "echo $PWD"
+    - name: Lint Code Base
+      uses: dbelyaev/action-checkstyle@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-check
+        checkstyle_config: google_checks.xml
+        level: warning
+
+  secrets:
+    needs: linting
+    name: Checking for secrets using gitleaks
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: gitleaks
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  security:
+    needs: secrets
+    name: Snyk scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven-3-jdk-17@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public final class MyAppService {
 
   public String getData() {
-    var somePassword = "T3TB4egC1bdQ3cpeo4awJE6uZKv8pwqbt4CVi4JHEWGPygSl7a3qbcn5YALsjCrb";
+    var pass = "T3TB4egC1bdQ3cpeo4awJE6uZKv8pwqbt4CVi4JHEWGPygSl7a3qbcn5YALsjCrb";
     return "Hello from my app devops project final.";
   }
 }

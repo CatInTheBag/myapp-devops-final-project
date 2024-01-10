@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-alpine
+FROM eclipse-temurin:21-alpine
 LABEL authors="vassilb"
 WORKDIR /app
 COPY target/myapp-devops-final-project-0.0.1-SNAPSHOT.jar app.jar

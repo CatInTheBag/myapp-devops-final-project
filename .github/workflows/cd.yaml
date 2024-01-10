@@ -34,10 +34,8 @@ jobs:
         id: docker-scout
         uses: docker/scout-action@v1
         with:
-          command: cves,recommendations,compare
+          command: cves,recommendations,quickview
           to-latest: true
           ignore-base: true
           ignore-unchanged: true
           only-fixed: true
-
-    #job3: docker scout for vulnerabilities

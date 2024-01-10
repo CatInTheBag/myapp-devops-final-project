@@ -1,5 +1,5 @@
 ---
-name: CI/CD
+name: Continuous Integration
 
 on:
   workflow_dispatch:
@@ -13,7 +13,7 @@ jobs:
     name: run unit tests on Java 17
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
       - name: Setup Java 17 temurin
         uses: actions/setup-java@v4
@@ -22,17 +22,15 @@ jobs:
           java-version: "17"
       - name: Run Maven clean test jobs
         run : mvn -f pom.xml clean test
-      - name: Show contents of the current working directory
-        run: ls -la
-      - name: Show contents of the target directory
-        run: ls -la target
+      #TODO: add messages for success or make it more informative
+      #TODO: use caching
 
   linting:
     needs: testing
     name: Lint code base with checkstyle
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: Checkout source
       uses: actions/checkout@v4
     - name: Lint Code Base
       uses: dbelyaev/action-checkstyle@master
@@ -48,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: checkout
+    - name: Checkout source
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
@@ -63,7 +61,7 @@ jobs:
     name: Snyk scan
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Run Snyk to check for vulnerabilities

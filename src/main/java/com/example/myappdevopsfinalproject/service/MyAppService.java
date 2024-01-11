@@ -1,5 +1,7 @@
 package com.example.myappdevopsfinalproject.service;
 
+import com.example.myappdevopsfinalproject.model.StudentRecord;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,7 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public final class MyAppService {
 
-  public String getData() {
-    return "Hello from my app devops project final.";
+  public List<StudentRecord> getData() {
+    return List.of(new StudentRecord("Vasil", "vasil.bachvarov.u23@learn.telerikacademy.com",
+        "Devops Spring Boot project"));
   }
 }

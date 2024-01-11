@@ -49,6 +49,6 @@ jobs:
       - name: Pull image from docker hub
         run: docker pull vassilb/myapp:latest
       - name: Delete previous instance
-        run: docker rm -f vassilb/myapp:latest
+        run: docker rm -f devops-final-project
       - name: Deploy latest image
         run: docker run -d -p 8080:8080 --name devops-final-project vassilb/myapp:latest

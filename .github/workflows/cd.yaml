@@ -1,5 +1,5 @@
 ---
-name: Continuous Deployment
+name: Continuous Deployment Test
 
 on:
   workflow_dispatch:
@@ -11,31 +11,20 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
-      - name: Setup Java 17 temurin
-        uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "17"
-      - name: Build project using maven
-        run: mvn clean install -DskipTests
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build docker image
-        run: docker build -t vassilb/myapp .
-      - name: Publish image to docker hub
-        run: docker push vassilb/myapp:latest
-
-      - name: Docker Scout
-        id: docker-scout
-        uses: docker/scout-action@v1
+      - name: Build and push
+        uses: docker/build-push-action@v5
         with:
-          command: cves,recommendations,quickview
-          to-latest: true
-          ignore-base: true
-          ignore-unchanged: true
-          only-fixed: true
+          context: .
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          push: true
+          tags: user/app:latest

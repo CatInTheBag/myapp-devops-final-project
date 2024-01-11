@@ -3,8 +3,6 @@ name: Continuous Integration
 
 on:
   workflow_dispatch:
-  push:
-    branches-ignore: [master, main]
   pull_request:
     branches: [master, main]
 

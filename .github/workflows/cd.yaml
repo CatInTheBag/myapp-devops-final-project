@@ -27,6 +27,7 @@ jobs:
           cache-to: type=gha,mode=max
           push: true
           tags: vassilb/myapp:latest
+
       - name: Docker Scout
         id: docker-scout
         uses: docker/scout-action@v1

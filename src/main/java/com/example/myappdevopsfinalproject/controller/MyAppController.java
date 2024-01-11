@@ -1,6 +1,8 @@
 package com.example.myappdevopsfinalproject.controller;
 
+import com.example.myappdevopsfinalproject.model.StudentRecord;
 import com.example.myappdevopsfinalproject.service.MyAppService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +23,8 @@ public class MyAppController {
     this.myAppService = myAppService;
   }
 
-  @GetMapping("/get-data")
-  public ResponseEntity<String> getData() {
+  @GetMapping("/get-students")
+  public ResponseEntity<List<StudentRecord>> getData() {
     return ResponseEntity.ok(myAppService.getData());
   }
 }

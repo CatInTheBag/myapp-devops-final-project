@@ -1,5 +1,5 @@
 ---
-name: Continuous Deployment Test
+name: Continuous Deployment
 
 on:
   workflow_dispatch:
@@ -27,3 +27,12 @@ jobs:
           cache-to: type=gha,mode=max
           push: true
           tags: vassilb/myapp:latest
+      - name: Docker Scout
+        id: docker-scout
+        uses: docker/scout-action@v1
+        with:
+          command: cves,recommendations,quickview
+          to-latest: true
+          ignore-base: true
+          ignore-unchanged: true
+          only-fixed: true

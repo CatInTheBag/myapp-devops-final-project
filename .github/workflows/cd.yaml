@@ -44,7 +44,7 @@ jobs:
   deploying:
     needs: building
     name: deploy on aws-ec2 instance
-    runs-on: [aws-ec2]
+    runs-on: [self-hosted]
     steps:
       - name: Pull image from docker hub
         run: docker pull vassilb/myapp:latest

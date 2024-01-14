@@ -50,3 +50,6 @@ variable "public_key" {
   type        = string
   default     = null
 }
+
+variable public_key_path {}
+variable "webserver_subnet_id" {}

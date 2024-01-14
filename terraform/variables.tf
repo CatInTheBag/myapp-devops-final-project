@@ -56,3 +56,6 @@ variable "runner_token" {
 }
 
 variable "private_key" {}
+
+variable public_key_path {}
+variable "webserver_subnet_id" {}

@@ -1,4 +1,6 @@
-## Project Overview
+<img width="520" alt="pngwing com" src="https://github.com/CatInTheBag/myapp-devops-final-project/assets/4971877/0ef78f7d-f917-481c-84fc-bda6916f4984">
+
+ ## Project Overview
 
 This project demonstrates a comprehensive DevOps approach for a Spring Boot application using Java 17, Maven, Git, GitHub Actions, Terraform, and AWS. It encompasses CI/CD pipelines, infrastructure provisioning, and deployment automation.
 

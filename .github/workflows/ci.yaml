@@ -39,7 +39,7 @@ jobs:
         level: warning
 
   secrets:
-    needs: linting
+    needs: testing
     name: Checking for secrets using gitleaks
     runs-on: ubuntu-latest
     steps:
@@ -55,7 +55,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   security:
-    needs: secrets
+    needs: testing
     name: Snyk scan
     runs-on: ubuntu-latest
     steps:

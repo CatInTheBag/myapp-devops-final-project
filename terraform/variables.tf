@@ -19,14 +19,25 @@ variable "availability_zone"{
   description = "AZ"
 }
 
+variable "availability_zonea"{
+  type = string
+  description = "AZ"
+}
+
+variable "availability_zoneb"{
+  type = string
+  description = "AZ"
+}
+
 variable "az_subnet_prefix"{
   type = string
   description = "AZ subnet"
 }
 
 variable "my_ip" {
-  type = string
-  description = "ip for ssh"
+  description = "The IP address"
+  type        = string
+  default     = null
 }
 
 variable "instance_type" {
@@ -34,5 +45,8 @@ variable "instance_type" {
   description = "ami instance type"
 }
 
-variable public_key_path {}
-variable "webserver_subnet_id" {}
+variable "public_key" {
+  description = "The public SSH key"
+  type        = string
+  default     = null
+}

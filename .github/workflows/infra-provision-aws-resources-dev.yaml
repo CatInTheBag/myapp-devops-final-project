@@ -36,14 +36,6 @@ jobs:
         with:
           terraform_version: "1.1.7"
 
-      - name: Change to Terraform directory
-        run: |
-          echo "Changing to the Terraform directory..."
-          cd terraform
-          echo "$PWD"
-          ls -la
-          sleep 5
-
       - name: Mask sensitive information
         run: |
           echo "::add-mask::$PRIVATE_IP"

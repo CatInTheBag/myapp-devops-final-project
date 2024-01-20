@@ -23,6 +23,9 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
+      - name: Change to Terraform directory
+        run: cd terraform
     
       - name: Setup hashicorp
         uses: hashicorp/setup-terraform@v3

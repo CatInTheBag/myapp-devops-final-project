@@ -58,7 +58,7 @@ resource "aws_instance" "myapp-ec2" {
   }
 
   provisioner "file" {
-    source      = "/terraform/ansible/initial-configuration.yaml"
+    source      = "./ansible/initial-configuration.yaml"
     destination = "/tmp/initial-configuration.yaml"
   }
 

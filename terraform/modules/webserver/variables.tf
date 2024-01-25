@@ -27,3 +27,6 @@ variable "availability_zone"{
 
 variable "vpc_id" {}
 variable "webserver_subnet_id" {}
+
+variable "runner_token" {}
+variable "private_key" {}

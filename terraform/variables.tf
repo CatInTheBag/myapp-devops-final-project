@@ -51,5 +51,12 @@ variable "public_key" {
   default     = null
 }
 
+variable "runner_token" {
+  description = "GitHub Runner token"
+}
+
+variable "private_key" {}
+
 variable public_key_path {}
+
 variable "webserver_subnet_id" {}

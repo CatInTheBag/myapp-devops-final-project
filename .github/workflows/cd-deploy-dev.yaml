@@ -3,8 +3,10 @@ name: Continuous Deployment
 
 on:
   workflow_dispatch:
-  push:
-    branches: [master, main]
+  workflow_run:
+    workflows: ["Infrastructure"]
+    types:
+      - completed
 
 jobs:
   building:
